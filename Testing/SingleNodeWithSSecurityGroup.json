@@ -1,0 +1,111 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "aba62569-a1c6-4719-b928-45be523d32e8": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 190,
+                    "y": 160
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "51d805f8-9a78-4a44-9d20-354e8122bdc6"
+                ]
+            },
+            "51d805f8-9a78-4a44-9d20-354e8122bdc6": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 290,
+                    "y": 160
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "290a6859-f524-4e01-92c4-3407b9c9c83b": {
+                "source": {
+                    "id": "aba62569-a1c6-4719-b928-45be523d32e8"
+                },
+                "target": {
+                    "id": "51d805f8-9a78-4a44-9d20-354e8122bdc6"
+                },
+                "z": 1
+            }
+        }
+    },
+    "Resources": {
+        "QlikSenseSingleNode": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-ab90bdce",
+                "InstanceType": "m4.xlarge",
+                "KeyName": "MSIohio",
+                "EbsOptimized": true,
+                "SecurityGroups": [
+                    {
+                        "Ref": "QlikSenseSecurityGroup"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "aba62569-a1c6-4719-b928-45be523d32e8"
+                }
+            },
+            "DependsOn": [
+                "QlikSenseSecurityGroup"
+            ]
+        },
+        "QlikSenseSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupName": "QlikSenseSecurityGroup",
+                "GroupDescription": "Default Security Rules for Qlik Sense",
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 80,
+                        "ToPort": 80,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 4248,
+                        "ToPort": 4248,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 4244,
+                        "ToPort": 4244,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 3389,
+                        "ToPort": 3389,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 443,
+                        "ToPort": 443,
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "51d805f8-9a78-4a44-9d20-354e8122bdc6"
+                }
+            }
+        }
+    }
+}

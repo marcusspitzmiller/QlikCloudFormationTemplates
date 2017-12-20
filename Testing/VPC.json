@@ -1,0 +1,33 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "e4fcb431-4305-4993-8490-60328797cc27": {
+                "size": {
+                    "width": 140,
+                    "height": 140
+                },
+                "position": {
+                    "x": 230,
+                    "y": 130
+                },
+                "z": 0,
+                "embeds": []
+            }
+        }
+    },
+    "Resources": {
+        "QlikSenseVPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "172.32.0.0/16",
+                "EnableDnsHostnames": true
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "e4fcb431-4305-4993-8490-60328797cc27"
+                }
+            }
+        }
+    }
+}

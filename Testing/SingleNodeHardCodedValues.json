@@ -1,0 +1,38 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "aba62569-a1c6-4719-b928-45be523d32e8": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 310,
+                    "y": 180
+                },
+                "z": 0,
+                "embeds": []
+            }
+        }
+    },
+    "Resources": {
+        "QlikSenseSingleNode": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-ab90bdce",
+                "InstanceType": "m4.xlarge",
+                "KeyName": "MSIohio",
+                "EbsOptimized":true,
+                "SecurityGroupIds": [
+                    "sg-a2cc47cb"
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "aba62569-a1c6-4719-b928-45be523d32e8"
+                }
+            }
+        }
+    }
+}
