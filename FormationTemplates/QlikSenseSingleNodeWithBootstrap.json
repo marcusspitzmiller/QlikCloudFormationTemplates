@@ -489,9 +489,9 @@
         },
         "AWSRegionArch2AMI": {
             "us-east-1": {
-                "PV64": "ami-2f39f655",
-                "HVM64": "ami-2f39f655",
-                "HVMG2": "ami-2f39f655"
+                "PV64": "ami-4176943c",
+                "HVM64": "ami-4176943c",
+                "HVMG2": "ami-4176943c"
             },
             "us-west-1": {
                 "PV64": "ami-0487b464",
@@ -672,7 +672,7 @@
                                 }
                             },
                             "c:\\installation\\cn-install.ps1": {
-                                "source": "https://raw.githubusercontent.com/marcusspitzmiller/QlikCloudFormationTemplates/master/Scripts/cn-install.ps1"
+                                "source": "https://raw.githubusercontent.com/marcusspitzmiller/QlikCloudFormationTemplates/usercreatefix/Scripts/cn-install.ps1"
                             }
                         },
                         "commands": {
