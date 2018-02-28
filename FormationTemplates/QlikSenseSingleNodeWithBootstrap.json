@@ -134,7 +134,7 @@
             "ConstraintDescription": "Qlik Sense Version to deploy."
         },
         "QlikSenseAdminUser": {
-            "Description": "Service Account User Name To Create",
+            "Description": "Local Service Account User Name To Create - do not use host\\user format, simply specify a user name",
             "Type": "String",
             "ConstraintDescription": "Service Account User Name"
         },
@@ -672,7 +672,7 @@
                                 }
                             },
                             "c:\\installation\\cn-install.ps1": {
-                                "source": "https://raw.githubusercontent.com/clintcarr/azure-quickstart-templates/qlik-sense-enterprise-multinode/qlik-sense-enterprise-multinode/cn-install.ps1"
+                                "source": "https://raw.githubusercontent.com/marcusspitzmiller/QlikCloudFormationTemplates/master/Scripts/cn-install.ps1"
                             }
                         },
                         "commands": {
