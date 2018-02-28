@@ -1,0 +1,814 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "aba62569-a1c6-4719-b928-45be523d32e8": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 190,
+                    "y": 160
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "51d805f8-9a78-4a44-9d20-354e8122bdc6"
+                ]
+            },
+            "51d805f8-9a78-4a44-9d20-354e8122bdc6": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 290,
+                    "y": 160
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "498916b4-0cdc-4651-b35c-bab6877b8f43": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 90,
+                    "y": 160
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "aba62569-a1c6-4719-b928-45be523d32e8"
+                ]
+            },
+            "720b084e-7b07-41c8-97df-90d1884b07e4": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -20,
+                    "y": 120
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "23747455-a5c0-46f7-ad7b-d3c02098062c": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -100,
+                    "y": 120
+                },
+                "z": 0,
+                "embeds": [],
+                "isassociatedwith": [
+                    "720b084e-7b07-41c8-97df-90d1884b07e4"
+                ]
+            }
+        }
+    },
+    "Parameters": {
+        "KeyName": {
+            "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instance",
+            "Type": "AWS::EC2::KeyPair::KeyName",
+            "ConstraintDescription": "must be the name of an existing EC2 KeyPair."
+        },
+        "InstanceType": {
+            "Description": "WebServer EC2 instance type",
+            "Type": "String",
+            "Default": "t2.medium",
+            "AllowedValues": [
+                "t2.medium",
+                "t2.large",
+                "m4.large",
+                "m4.xlarge",
+                "m4.2xlarge",
+                "m4.4xlarge",
+                "m4.10xlarge",
+                "m4.16xlarge",
+                "m5.large",
+                "m5.xlarge",
+                "m5.2xlarge",
+                "m5.4xlarge",
+                "m5.12xlarge",
+                "m5.24xlarge",
+                "c4.large",
+                "c4.xlarge",
+                "c4.2xlarge",
+                "c4.4xlarge",
+                "c4.8xlarge",
+                "c5.large",
+                "c5.xlarge",
+                "c5.2xlarge",
+                "c5.4xlarge",
+                "c5.9xlarge",
+                "c5.18xlarge",
+                "r3.large",
+                "r3.xlarge",
+                "r3.2xlarge",
+                "r3.4xlarge",
+                "r3.8xlarge",
+                "r4.large",
+                "r4.xlarge",
+                "r4.2xlarge",
+                "r4.4xlarge",
+                "r4.8xlarge",
+                "r4.16xlarge"
+            ],
+            "ConstraintDescription": "must be a valid EC2 instance type."
+        },
+        "QlikSenseVersion": {
+            "Description": "Qlik Sense Version to deploy",
+            "Type": "String",
+            "Default": "Qlik Sense November 2017 Patch 1",
+            "AllowedValues": [
+                "Qlik Sense November 2017 Patch 1",
+                "Qlik Sense November 2017"
+            ],
+            "ConstraintDescription": "Qlik Sense Version to deploy."
+        },
+        "QlikSenseAdminUser": {
+            "Description": "Service Account User Name To Create",
+            "Type": "String",
+            "ConstraintDescription": "Service Account User Name"
+        },
+        "QlikSenseAdminPassword": {
+            "Description": "Service Account Password To Create",
+            "Type": "String",
+            "ConstraintDescription": "Service Account Password To Create"
+        },
+        "QlikSenseLicenseSerial": {
+            "Description": "License Serial #",
+            "Type": "String",
+            "ConstraintDescription": "License Serial #"
+        },
+        "QlikSenseLicenseControl": {
+            "Description": "License Control Number",
+            "Type": "String",
+            "ConstraintDescription": "License Control Number"
+        },
+        "QlikSenseLicenseOrganization": {
+            "Description": "License Organization",
+            "Type": "String",
+            "ConstraintDescription": "License Organization"
+        },
+        "QlikSenseLicenseName": {
+            "Description": "License User Name",
+            "Type": "String",
+            "ConstraintDescription": "License User Name"
+        }
+    },
+    "Mappings": {
+        "AWSInstanceType2Arch": {
+            "t1.micro": {
+                "Arch": "PV64"
+            },
+            "t2.nano": {
+                "Arch": "HVM64"
+            },
+            "t2.micro": {
+                "Arch": "HVM64"
+            },
+            "t2.small": {
+                "Arch": "HVM64"
+            },
+            "t2.medium": {
+                "Arch": "HVM64"
+            },
+            "t2.large": {
+                "Arch": "HVM64"
+            },
+            "m1.small": {
+                "Arch": "PV64"
+            },
+            "m1.medium": {
+                "Arch": "PV64"
+            },
+            "m1.large": {
+                "Arch": "PV64"
+            },
+            "m1.xlarge": {
+                "Arch": "PV64"
+            },
+            "m2.xlarge": {
+                "Arch": "PV64"
+            },
+            "m2.2xlarge": {
+                "Arch": "PV64"
+            },
+            "m2.4xlarge": {
+                "Arch": "PV64"
+            },
+            "m3.medium": {
+                "Arch": "HVM64"
+            },
+            "m3.large": {
+                "Arch": "HVM64"
+            },
+            "m3.xlarge": {
+                "Arch": "HVM64"
+            },
+            "m3.2xlarge": {
+                "Arch": "HVM64"
+            },
+            "m4.large": {
+                "Arch": "HVM64"
+            },
+            "m4.xlarge": {
+                "Arch": "HVM64"
+            },
+            "m4.2xlarge": {
+                "Arch": "HVM64"
+            },
+            "m4.4xlarge": {
+                "Arch": "HVM64"
+            },
+            "m4.10xlarge": {
+                "Arch": "HVM64"
+            },
+            "c1.medium": {
+                "Arch": "PV64"
+            },
+            "c1.xlarge": {
+                "Arch": "PV64"
+            },
+            "c3.large": {
+                "Arch": "HVM64"
+            },
+            "c3.xlarge": {
+                "Arch": "HVM64"
+            },
+            "c3.2xlarge": {
+                "Arch": "HVM64"
+            },
+            "c3.4xlarge": {
+                "Arch": "HVM64"
+            },
+            "c3.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "c4.large": {
+                "Arch": "HVM64"
+            },
+            "c4.xlarge": {
+                "Arch": "HVM64"
+            },
+            "c4.2xlarge": {
+                "Arch": "HVM64"
+            },
+            "c4.4xlarge": {
+                "Arch": "HVM64"
+            },
+            "c4.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "g2.2xlarge": {
+                "Arch": "HVMG2"
+            },
+            "g2.8xlarge": {
+                "Arch": "HVMG2"
+            },
+            "r3.large": {
+                "Arch": "HVM64"
+            },
+            "r3.xlarge": {
+                "Arch": "HVM64"
+            },
+            "r3.2xlarge": {
+                "Arch": "HVM64"
+            },
+            "r3.4xlarge": {
+                "Arch": "HVM64"
+            },
+            "r3.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "i2.xlarge": {
+                "Arch": "HVM64"
+            },
+            "i2.2xlarge": {
+                "Arch": "HVM64"
+            },
+            "i2.4xlarge": {
+                "Arch": "HVM64"
+            },
+            "i2.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "d2.xlarge": {
+                "Arch": "HVM64"
+            },
+            "d2.2xlarge": {
+                "Arch": "HVM64"
+            },
+            "d2.4xlarge": {
+                "Arch": "HVM64"
+            },
+            "d2.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "hi1.4xlarge": {
+                "Arch": "HVM64"
+            },
+            "hs1.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "cr1.8xlarge": {
+                "Arch": "HVM64"
+            },
+            "cc2.8xlarge": {
+                "Arch": "HVM64"
+            }
+        },
+        "AWSInstanceType2NATArch": {
+            "t1.micro": {
+                "Arch": "NATPV64"
+            },
+            "t2.nano": {
+                "Arch": "NATHVM64"
+            },
+            "t2.micro": {
+                "Arch": "NATHVM64"
+            },
+            "t2.small": {
+                "Arch": "NATHVM64"
+            },
+            "t2.medium": {
+                "Arch": "NATHVM64"
+            },
+            "t2.large": {
+                "Arch": "NATHVM64"
+            },
+            "m1.small": {
+                "Arch": "NATPV64"
+            },
+            "m1.medium": {
+                "Arch": "NATPV64"
+            },
+            "m1.large": {
+                "Arch": "NATPV64"
+            },
+            "m1.xlarge": {
+                "Arch": "NATPV64"
+            },
+            "m2.xlarge": {
+                "Arch": "NATPV64"
+            },
+            "m2.2xlarge": {
+                "Arch": "NATPV64"
+            },
+            "m2.4xlarge": {
+                "Arch": "NATPV64"
+            },
+            "m3.medium": {
+                "Arch": "NATHVM64"
+            },
+            "m3.large": {
+                "Arch": "NATHVM64"
+            },
+            "m3.xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "m3.2xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "m4.large": {
+                "Arch": "NATHVM64"
+            },
+            "m4.xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "m4.2xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "m4.4xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "m4.10xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "c1.medium": {
+                "Arch": "NATPV64"
+            },
+            "c1.xlarge": {
+                "Arch": "NATPV64"
+            },
+            "c3.large": {
+                "Arch": "NATHVM64"
+            },
+            "c3.xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "c3.2xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "c3.4xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "c3.8xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "c4.large": {
+                "Arch": "NATHVM64"
+            },
+            "c4.xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "c4.2xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "c4.4xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "c4.8xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "g2.2xlarge": {
+                "Arch": "NATHVMG2"
+            },
+            "g2.8xlarge": {
+                "Arch": "NATHVMG2"
+            },
+            "r3.large": {
+                "Arch": "NATHVM64"
+            },
+            "r3.xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "r3.2xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "r3.4xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "r3.8xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "i2.xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "i2.2xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "i2.4xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "i2.8xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "d2.xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "d2.2xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "d2.4xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "d2.8xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "hi1.4xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "hs1.8xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "cr1.8xlarge": {
+                "Arch": "NATHVM64"
+            },
+            "cc2.8xlarge": {
+                "Arch": "NATHVM64"
+            }
+        },
+        "AWSRegionArch2AMI": {
+            "us-east-1": {
+                "PV64": "ami-2f39f655",
+                "HVM64": "ami-2f39f655",
+                "HVMG2": "ami-2f39f655"
+            },
+            "us-west-1": {
+                "PV64": "ami-0487b464",
+                "HVM64": "ami-0487b464",
+                "HVMG2": "ami-0487b464"
+            },
+            "us-west-2": {
+                "PV64": "ami-6b933213",
+                "HVM64": "ami-6b933213",
+                "HVMG2": "ami-6b933213"
+            },
+            "eu-west-1": {
+                "PV64": "ami-74f6250d",
+                "HVM64": "ami-74f6250d",
+                "HVMG2": "ami-74f6250d"
+            },
+            "eu-west-2": {
+                "PV64": "NOT_SUPPORTED",
+                "HVM64": "ami-6a9c8e0e",
+                "HVMG2": "NOT_SUPPORTED"
+            },
+            "eu-central-1": {
+                "PV64": "ami-6afd4205",
+                "HVM64": "ami-6afd4205",
+                "HVMG2": "ami-6afd4205"
+            },
+            "ap-northeast-1": {
+                "PV64": "ami-a3538fc5",
+                "HVM64": "ami-a3538fc5",
+                "HVMG2": "ami-a3538fc5"
+            },
+            "ap-northeast-2": {
+                "PV64": "NOT_SUPPORTED",
+                "HVM64": "ami-bbe144d5",
+                "HVMG2": "NOT_SUPPORTED"
+            },
+            "ap-southeast-1": {
+                "PV64": "ami-c74f37a4",
+                "HVM64": "ami-c74f37a4",
+                "HVMG2": "ami-c74f37a4"
+            },
+            "ap-southeast-2": {
+                "PV64": "ami-08c92b6a",
+                "HVM64": "ami-08c92b6a",
+                "HVMG2": "ami-08c92b6a"
+            },
+            "ap-south-1": {
+                "PV64": "NOT_SUPPORTED",
+                "HVM64": "ami-baf9b9d5",
+                "HVMG2": "ami-baf9b9d5"
+            },
+            "us-east-2": {
+                "PV64": "NOT_SUPPORTED",
+                "HVM64": "ami-ab90bdce",
+                "HVMG2": "NOT_SUPPORTED"
+            },
+            "ca-central-1": {
+                "PV64": "NOT_SUPPORTED",
+                "HVM64": "ami-8c06bfe8",
+                "HVMG2": "NOT_SUPPORTED"
+            },
+            "sa-east-1": {
+                "PV64": "ami-bb057bd7",
+                "HVM64": "ami-bb057bd7",
+                "HVMG2": "NOT_SUPPORTED"
+            }
+        }
+    },
+    "Resources": {
+        "QlikSenseSingleNode": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": {
+                    "Fn::FindInMap": [
+                        "AWSRegionArch2AMI",
+                        {
+                            "Ref": "AWS::Region"
+                        },
+                        {
+                            "Fn::FindInMap": [
+                                "AWSInstanceType2Arch",
+                                {
+                                    "Ref": "InstanceType"
+                                },
+                                "Arch"
+                            ]
+                        }
+                    ]
+                },
+                "InstanceType": {
+                    "Ref": "InstanceType"
+                },
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "EbsOptimized": false,
+                "SecurityGroups": [
+                    {
+                        "Ref": "QlikSenseSecurityGroup"
+                    }
+                ],
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "<script>\n",
+                                "cfn-init.exe -v -s ",
+                                {
+                                    "Ref": "AWS::StackName"
+                                },
+                                " -r QlikSenseSingleNode",
+                                " --region ",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                "\n",
+                                "cfn-signal.exe -e %ERRORLEVEL% ",
+                                {
+                                    "Fn::Base64": {
+                                        "Ref": "QlikSenseSingleNodeWaitHandle"
+                                    }
+                                },
+                                "\n",
+                                "</script>"
+                            ]
+                        ]
+                    }
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "aba62569-a1c6-4719-b928-45be523d32e8"
+                },
+                "AWS::CloudFormation::Init": {
+                    "config": {
+                        "files": {
+                            "c:\\cfn\\cfn-hup.conf": {
+                                "content": {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "[main]\n",
+                                            "stack=",
+                                            {
+                                                "Ref": "AWS::StackName"
+                                            },
+                                            "\n",
+                                            "region=",
+                                            {
+                                                "Ref": "AWS::Region"
+                                            },
+                                            "\n"
+                                        ]
+                                    ]
+                                }
+                            },
+                            "c:\\cfn\\hooks.d\\cfn-auto-reloader.conf": {
+                                "content": {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "[cfn-auto-reloader-hook]\n",
+                                            "triggers=post.update\n",
+                                            "path=Resources.QlikSenseSingleNode.Metadata.AWS::CloudFormation::Init\n",
+                                            "action=cfn-init.exe -v -s ",
+                                            {
+                                                "Ref": "AWS::StackName"
+                                            },
+                                            " -r QlikSenseSingleNode",
+                                            " --region ",
+                                            {
+                                                "Ref": "AWS::Region"
+                                            },
+                                            "\n"
+                                        ]
+                                    ]
+                                }
+                            },
+                            "c:\\installation\\cn-install.ps1": {
+                                "source": "https://raw.githubusercontent.com/clintcarr/azure-quickstart-templates/qlik-sense-enterprise-multinode/qlik-sense-enterprise-multinode/cn-install.ps1"
+                            }
+                        },
+                        "commands": {
+                            "0-enable-remoting": {
+                                "command": "powershell.exe -Command Enable-PSRemoting -Force"
+                            },
+                            "1-install-central": {
+                                "command": {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "powershell.exe -Command c:\\installation\\cn-install.ps1 ",
+                                            {
+                                                "Ref": "QlikSenseAdminUser"
+                                            },
+                                            " ",
+                                            {
+                                                "Ref": "QlikSenseAdminPassword"
+                                            },
+                                            " ",
+                                            {
+                                                "Ref": "QlikSenseAdminUser"
+                                            },
+                                            " ",
+                                            {
+                                                "Ref": "QlikSenseAdminPassword"
+                                            },
+                                            " ",
+                                            {
+                                                "Ref": "QlikSenseAdminPassword"
+                                            },
+                                            " '",
+                                            {
+                                                "Ref": "QlikSenseVersion"
+                                            },
+                                            "' ",
+                                            {
+                                                "Ref": "QlikSenseLicenseSerial"
+                                            },
+                                            " ",
+                                            {
+                                                "Ref": "QlikSenseLicenseControl"
+                                            },
+                                            " ",
+                                            {
+                                                "Ref": "QlikSenseLicenseOrganization"
+                                            },
+                                            " ",
+                                            {
+                                                "Ref": "QlikSenseLicenseName"
+                                            }
+                                        ]
+                                    ]
+                                }
+                            },
+                            "2-disable-remoting": {
+                                "command": "powershell.exe -Command Disable-PSRemoting -Force"
+                            }
+                        }
+                    }
+                }
+            },
+            "DependsOn": [
+                "QlikSenseSecurityGroup"
+            ]
+        },
+        "QlikSenseSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupName": "QlikSenseSecurityGroup",
+                "GroupDescription": "Default Security Rules for Qlik Sense",
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 4244,
+                        "ToPort": 4244,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 3389,
+                        "ToPort": 3389,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 443,
+                        "ToPort": 443,
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "51d805f8-9a78-4a44-9d20-354e8122bdc6"
+                }
+            }
+        },
+        "QlikSenseElasticIP": {
+            "Type": "AWS::EC2::EIP",
+            "Properties": {
+                "InstanceId": {
+                    "Ref": "QlikSenseSingleNode"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "498916b4-0cdc-4651-b35c-bab6877b8f43"
+                }
+            },
+            "DependsOn": [
+                "QlikSenseSingleNode"
+            ]
+        },
+        "QlikSenseSingleNodeWaitHandle": {
+            "Type": "AWS::CloudFormation::WaitConditionHandle",
+            "Properties": {},
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "720b084e-7b07-41c8-97df-90d1884b07e4"
+                }
+            }
+        },
+        "QlikSenseSingleNodeWaitCondition": {
+            "Type": "AWS::CloudFormation::WaitCondition",
+            "Properties": {
+                "Handle": {
+                    "Ref": "QlikSenseSingleNodeWaitHandle"
+                },
+                "Timeout": "3600"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "23747455-a5c0-46f7-ad7b-d3c02098062c"
+                }
+            }
+        }
+    }
+}
