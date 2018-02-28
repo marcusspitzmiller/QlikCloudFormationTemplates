@@ -87,7 +87,8 @@ $json | ConvertTo-Json -Compress -Depth 10 | Out-File 'c:\installation\qBinaryDo
 
 # create qlik sense service account
 Write-Log -Message "Creating Service Account $($serviceAccountUser)"
-net user "$($serviceAccountUser)" "$($serviceAccountPass)" /add /fullname:"Qlik Sense Service Account" /passwordchg:NO
+#net user "$($serviceAccountUser)" "$($serviceAccountPass)" /add /fullname:"Qlik Sense Service Account" /passwordchg:NO
+cmd.exe /c net user "$($serviceAccountUser)" "$($serviceAccountPass)" /add /fullname:"Qlik Sense Service Account" /passwordchg:NO
 Write-Log -Message "Adding $($serviceAccountUser) to local administrators"
 ([ADSI]"WinNT://$($env:computername)/administrators,group").psbase.Invoke("Add",([ADSI]"WinNT://$($env:computername)/$($serviceAccountUser)").path)
 
