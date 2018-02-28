@@ -672,7 +672,7 @@
                                 }
                             },
                             "c:\\installation\\cn-install.ps1": {
-                                "source": "https://raw.githubusercontent.com/marcusspitzmiller/QlikCloudFormationTemplates/usercreatefix/Scripts/cn-install.ps1"
+                                "source": "https://raw.githubusercontent.com/marcusspitzmiller/QlikCloudFormationTemplates/master/Scripts/cn-install.ps1"
                             }
                         },
                         "commands": {
