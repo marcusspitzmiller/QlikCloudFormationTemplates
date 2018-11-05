@@ -126,8 +126,9 @@
         "QlikSenseVersion": {
             "Description": "Qlik Sense Version to deploy",
             "Type": "String",
-            "Default": "Qlik Sense November 2017 Patch 1",
+            "Default": "Qlik Sense September 2018 Patch 1",
             "AllowedValues": [
+                "Qlik Sense September 2018 Patch 1",
                 "Qlik Sense November 2017 Patch 1",
                 "Qlik Sense November 2017"
             ],
